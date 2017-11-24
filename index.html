@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="sampleApp">
+  <head>
+    <title>Doctory.UK - The health price comparison site.</title>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.2.23/angular.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js"></script>
+    <script src="js/angular-external-data.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <header><h1>Doctory - UK National Health Service Value</h1></header>
+    <h2>Health Resource Groups</h2>
+    <div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xsml-12">
+      <label>Search</label>
+      <input type="text" class="form-control" ng-model="searchFilter" />
+    </div>
+      <table ng-controller="TimetableCtrl">
+        <tr><th><h3>Description</h3></th><th><h3>Av. Cost</h3></th><th><h3>Occurrences</h3></th><th><h3>Total Cost</h3></tr>
+        <tr ng-repeat="session in resultValue = (sessions | filter:{'Title':searchFilter})" ng-init="setTotals()">
+          <td>{{ session.Title }}</td>
+          <td>{{ session.AverageCost | number:2}}</td>
+          <td>{{ session.Occurrences }}</td>
+          <td>{{ session.Total | number:2}}</td>
+        </tr>
+        <tr>
+          <th><h4>{{ resultValue.length }} matching records.</h4></th>
+        <th><h4>&pound;{{resultValue | sumOfValue:'AverageCost' | number:0}}</h4></th>
+        <th><h4>{{resultValue | sumOfValue:'Occurrences' | number:0}}</h4></th>
+        <th><h4>&pound;{{resultValue | sumOfValue:'Total' | number:0}}</h4></th>
+    </tr>
+      </table>
+
+    </div>
+  </body>
+</html>
